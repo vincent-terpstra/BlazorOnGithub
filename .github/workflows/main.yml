@@ -21,6 +21,12 @@ jobs:
     #publishes Blazor project to the release folder
     - name: Publish .Net Core Project
       run: dotnet publish -c Release --nologo
+     
+    - name: change current directory
+      run: cd /home/runner/work/BlazorOnGithub/BlazorOnGithub/BlazorOnGithub/bin/
+
+    - name: list current directory
+      run: ls
 
     #change the base-tage in index.html from / to BlazorOnGithub
     - name: Change base-tag in index.html from / to BlazorOnGithub
