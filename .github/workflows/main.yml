@@ -18,6 +18,10 @@ jobs:
       with:
         dotnet-version: 8.0.100
 
+    #clean the project
+    - name: Clean .Net Core Project
+      run: dotnet clean
+
     #publishes Blazor project to the release folder
     - name: Publish .Net Core Project
       run: dotnet publish -c Release -o ./release --nologo
