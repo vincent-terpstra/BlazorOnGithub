@@ -23,10 +23,10 @@ jobs:
       run: dotnet publish -c Release --nologo
      
     - name: change current directory
-      run: cd /home/runner/work/BlazorOnGithub/BlazorOnGithub/BlazorOnGithub/bin/
+      run: cd /home/runner/work/BlazorOnGithub/BlazorOnGithub/BlazorOnGithub/
 
     - name: list current directory
-      run: ls
+      run: tree /f
 
     #change the base-tage in index.html from / to BlazorOnGithub
     - name: Change base-tag in index.html from / to BlazorOnGithub
