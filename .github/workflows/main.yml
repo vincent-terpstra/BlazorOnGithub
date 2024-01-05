@@ -26,7 +26,7 @@ jobs:
       run: cd /home/runner/work/BlazorOnGithub/BlazorOnGithub/BlazorOnGithub/
 
     - name: list current directory
-      run: tree /f
+      run: dir /s /b /o:gn
 
     #change the base-tage in index.html from / to BlazorOnGithub
     - name: Change base-tag in index.html from / to BlazorOnGithub
