@@ -20,7 +20,7 @@ jobs:
 
     #publishes Blazor project to the release folder
     - name: Publish .Net Core Project
-      run: dotnet publish -c Release -o release --nologo
+      run: dotnet publish -c Release -o ./release --nologo
 
     #change the base-tage in index.html from / to BlazorOnGithub
     - name: Change base-tag in index.html from / to BlazorOnGithub
@@ -38,8 +38,10 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@3.7.1
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        Base_Branch: master
         Branch: gh-pages
-        FOLDER: release/wwwroot
+        FOLDER: release/wwwroot/
+        SINGLE_COMMIT: true
         
       
       
