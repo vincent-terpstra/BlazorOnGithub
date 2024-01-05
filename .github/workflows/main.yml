@@ -20,32 +20,26 @@ jobs:
 
     #publishes Blazor project to the release folder
     - name: Publish .Net Core Project
-      run: dotnet publish -c Release --nologo
-     
-    - name: change current directory
-      run: cd /home/runner/work/BlazorOnGithub/BlazorOnGithub/
-
-    - name: list current directory
-      run: ls -r
+      run: dotnet publish -c Release -o ./release --nologo
 
     #change the base-tage in index.html from / to BlazorOnGithub
     - name: Change base-tag in index.html from / to BlazorOnGithub
-      run: sed -i 's/<base href="\/" \/>/<base href="\/BlazorOnGithub\/" \/>/g' bin/Release/net8.0/wwwroot/index.html
+      run: sed -i 's/<base href="\/" \/>/<base href="\/BlazorOnGithub\/" \/>/g' release/wwwroot/index.html
 
     #copy index.html to 404.html to serve the same file when not found
     - name: copy index.html to 404.html
-      run: cp bin/Release/net8.0/wwwroot/index.html bin/Release/net8.0/wwwroot/404.html
+      run: cp release/wwwroot/index.html release/wwwroot/404.html
 
     #add .nojekyll file to tell github pages to not treat this a Jekyll projcet
     - name: Add .nojekyll file
-      run: touch bin/Release/net8.0/wwwroot/.nojekyll
+      run: touch release/wwwroot/.nojekyll
 
     - name: Commit wwwroot to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@3.7.1
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         Branch: gh-pages
-        FOLDER: bin/Release/net8.0/
+        FOLDER: release/wwwroot/
         
       
       
