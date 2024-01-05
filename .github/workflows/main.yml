@@ -23,7 +23,7 @@ jobs:
       run: dotnet publish -c Release --nologo
      
     - name: change current directory
-      run: cd /home/runner/work/BlazorOnGithub/BlazorOnGithub/BlazorOnGithub/
+      run: cd /home/runner/work/BlazorOnGithub/BlazorOnGithub/
 
     - name: list current directory
       run: ls -r
