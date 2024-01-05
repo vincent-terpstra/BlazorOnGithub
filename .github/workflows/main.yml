@@ -38,8 +38,10 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@3.7.1
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        Base_Branch: master
         Branch: gh-pages
         FOLDER: release/wwwroot/
+        SINGLE_COMMIT: true
         
       
       
