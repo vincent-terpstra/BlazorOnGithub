@@ -1,0 +1,26 @@
+﻿@page "/appstate"
+@using BlazorOnGithub.Services
+
+
+<PageTitle>App State</PageTitle>
+
+<h1>App State</h1>
+
+<label for="id1">Value 1</label>
+<InputText id="id1" @bind-Value="@_appState.Message"></InputText>
+
+
+@code {
+
+    [CascadingParameter]
+    public CascadingAppState CascadingAppState { get; set; } = default!;
+
+    private AppState _appState = default!;
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        _appState = CascadingAppState.AppState;
+    }
+
+}

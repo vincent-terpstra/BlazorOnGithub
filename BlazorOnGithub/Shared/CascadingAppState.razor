@@ -1,0 +1,55 @@
+﻿@using BlazorOnGithub.Services
+@using System.Text.Json
+@inject IJSRuntime JsRuntime;
+@implements IAsyncDisposable;
+
+@if (_hasLoaded)
+{
+    <CascadingValue Value="@this" IsFixed>
+        @ChildContent
+    </CascadingValue>
+}
+
+@code {
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+        private const string Key = "ApplicationState";
+
+    public AppState AppState = default!;
+    private bool _hasLoaded = false;
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            var value = await JsRuntime.InvokeAsync<string>("localStorage.getItem", Key);
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                AppState = JsonSerializer.Deserialize<AppState>(value) ?? new();
+            }
+        }
+        finally
+        {
+            AppState ??= new();
+        }
+        _hasLoaded = true;
+    }
+
+
+    public async ValueTask DisposeAsync()
+    {
+        try
+        {
+            var value = JsonSerializer.Serialize(AppState);
+            await JsRuntime.InvokeVoidAsync("localStorage.setItem", Key, value);
+        }
+        catch
+        {
+    // Ignored
+        }
+    }
+
+}
