@@ -4,16 +4,19 @@
 
 <h1>Counter</h1>
 
-<p role="status">Current count: @currentCount</p>
+<p role="status">Current count: @AppState.Count</p>
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
 @code {
-    private int currentCount = 0;
+
+    [CascadingParameter]
+    public AppState AppState { get; set; } = default!;
+    
 
     private void IncrementCount()
     {
-        currentCount++;
+        AppState.Count++;
     }
 
 }

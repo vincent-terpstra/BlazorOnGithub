@@ -16,8 +16,17 @@ public class AppState
     }
 
     public bool Enabled { get; set; } = true;
-    public int Counter { get;set; } = 1;
 
-
+    private int _count = 1;
+    public int Count
+    {
+        get => _count;
+        set
+        {
+            _count = value;
+            AppStateChanged?.Invoke();
+        }
+    }
+    
     public event Action? AppStateChanged;
 }

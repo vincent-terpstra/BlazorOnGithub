@@ -1,0 +1,17 @@
+﻿@page "/appstate"
+
+
+<PageTitle>App State</PageTitle>
+
+<h1>App State</h1>
+
+<label for="id1">Value 1</label>
+<InputText id="id1" @bind-Value="@AppState.Message"></InputText>
+
+
+@code {
+
+    [CascadingParameter]
+    public AppState AppState { get; set; } = default!;
+
+}

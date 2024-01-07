@@ -5,7 +5,7 @@
 
 @if (_hasLoaded)
 {
-    <CascadingValue Value="@this" IsFixed>
+    <CascadingValue Value="@AppState" IsFixed>
         @ChildContent
     </CascadingValue>
 }
@@ -30,6 +30,10 @@
             {
                 AppState = JsonSerializer.Deserialize<AppState>(value) ?? new();
             }
+        }
+        catch
+        {
+            // Ignored
         }
         finally
         {
