@@ -1,5 +1,44 @@
-﻿<h3>ListItems</h3>
+﻿@page "/listitems"
+
+<h3>ListItems</h3>
+
+<label for="txtinput">Add Value</label>
+<InputText id="txtinput" @bind-Value="@TextValue"></InputText>
+<button onclick="@AddTextValue">Add</button>
+
+@if (SavedTexts.Any())
+{
+    <h4>Saved Values</h4>
+    <ul>
+        @foreach (var text in SavedTexts)
+        {
+            <li>@text.Text</li>
+        }
+    </ul>
+}
+
 
 @code {
-    
+    private string TextValue { get; set; }
+
+
+    private List<SavedText> SavedTexts = new();
+
+    public void AddTextValue()
+    {
+        SavedTexts.Add(new SavedText()
+        {
+            Id = new Guid(),
+            Text = TextValue
+        });
+
+        TextValue = string.Empty;
+    }
+
+
+    private class SavedText
+    {
+        public Guid Id { get; set; }
+        public string Text { get; set; }
+    }
 }
