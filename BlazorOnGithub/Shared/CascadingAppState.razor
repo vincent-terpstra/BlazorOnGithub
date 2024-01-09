@@ -1,6 +1,6 @@
 ﻿@using BlazorOnGithub.Services
 @using System.Text.Json
-@inject IJSRuntime JsRuntime;
+@inject IMemoryService MemoryService;
 @implements IDisposable;
 
 @if (_hasLoaded)
@@ -15,6 +15,7 @@
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 
+
         private const string Key = "ApplicationState";
 
     public AppState AppState = default!;
@@ -25,11 +26,7 @@
     {
         try
         {
-            var value = await JsRuntime.InvokeAsync<string>("localStorage.getItem", Key);
-            if (!string.IsNullOrWhiteSpace(value))
-            {
-                AppState = JsonSerializer.Deserialize<AppState>(value) ?? new();
-            }
+            AppState = await MemoryService.GetItemAsync<AppState>(Key) ?? new();
         }
         catch
         {
@@ -55,13 +52,11 @@
     {
         try
         {
-            var value = JsonSerializer.Serialize(AppState);
-            await JsRuntime.InvokeVoidAsync("localStorage.setItem", Key, value);
+            await MemoryService.SetItemAsync(Key, AppState);
         }
         catch
         {
             // Ignored
         }
     }
-
 }
