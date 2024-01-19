@@ -1,0 +1,26 @@
+﻿@page "/Images"
+@using BlazorInputFile
+
+<h3>Images</h3>
+
+<BlazorInputFile.InputFile id="image-picker" OnChange=HandlePhotoSelected accept="image/*" />
+
+<img src="@PhotoUrl" class="image-url" alt="no image selected" />
+@code {
+    
+    private string PhotoUrl { get; set; }
+
+    public async Task HandlePhotoSelected(IFileListEntry[] files)
+    {
+        var sourceFile = files.FirstOrDefault();
+        if (sourceFile is not null)
+        {
+            // Convert to reasonably-sized JPEG
+            var imageFile = await sourceFile.ToImageFileAsync("image/jpeg", 800, 600);
+    
+            // Represent it as a data URL we can display
+            var bytes = await imageFile.ReadAllAsync();
+            PhotoUrl = bytes.ToDataUrl("image/jpeg");
+        }
+    }
+}
